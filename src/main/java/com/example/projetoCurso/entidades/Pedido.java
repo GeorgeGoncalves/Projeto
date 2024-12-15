@@ -1,7 +1,9 @@
 package com.example.projetoCurso.entidades;
 
 import java.time.Instant;
+import java.util.HashSet;
 import java.util.Objects;
+import java.util.Set;
 
 import com.example.projetoCurso.entidades.enums.StatusPedido;
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -12,6 +14,7 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
 
 @Entity
 public class Pedido {
@@ -29,6 +32,9 @@ public class Pedido {
 	@ManyToOne
 	@JoinColumn(name = "usuario_ID")
 	private Usuario usuario;
+	
+	@OneToMany(mappedBy = "id.pedido")
+	private Set<ItemPedido> item = new HashSet<>();
 	
 	public Pedido() {
 	}
@@ -75,6 +81,10 @@ public class Pedido {
 		this.usuario = usuario;
 	}
 
+	public Set<ItemPedido> getItem(){
+		return item;
+	}
+	
 	@Override
 	public int hashCode() {
 		return Objects.hash(id);

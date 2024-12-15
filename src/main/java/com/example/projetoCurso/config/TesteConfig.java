@@ -9,11 +9,13 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Profile;
 
 import com.example.projetoCurso.entidades.Categoria;
+import com.example.projetoCurso.entidades.ItemPedido;
 import com.example.projetoCurso.entidades.Pedido;
 import com.example.projetoCurso.entidades.Produto;
 import com.example.projetoCurso.entidades.Usuario;
 import com.example.projetoCurso.entidades.enums.StatusPedido;
 import com.example.projetoCurso.repositorio.CategoriaRepositorio;
+import com.example.projetoCurso.repositorio.ItemPedidoRepositorio;
 import com.example.projetoCurso.repositorio.PedidoRepositorio;
 import com.example.projetoCurso.repositorio.ProdutoRepositorio;
 import com.example.projetoCurso.repositorio.UsuarioRepositorio;
@@ -33,6 +35,9 @@ public class TesteConfig implements CommandLineRunner {
 	
 	@Autowired
 	private ProdutoRepositorio pp;
+	
+	@Autowired
+	private ItemPedidoRepositorio ipp;
 	
 	@Override
 	public void run(String... args) throws Exception {
@@ -85,5 +90,12 @@ public class TesteConfig implements CommandLineRunner {
 				StatusPedido.AGUARDANDO_PAGAMENTO, u1);
 		
 		pr.saveAll(Arrays.asList(p1, p2, p3));
+		
+		ItemPedido ip1 = new ItemPedido(p1, pro1, 2, pro1.getPreco()); 
+		ItemPedido ip2 = new ItemPedido(p1, pro3, 1, pro3.getPreco()); 
+		ItemPedido ip3 = new ItemPedido(p2, pro3, 2, pro3.getPreco()); 
+		ItemPedido ip4 = new ItemPedido(p3, pro5, 2, pro5.getPreco()); 
+		
+		ipp.saveAll(Arrays.asList(ip1, ip2, ip3, ip4));		
 	}
 }
