@@ -13,14 +13,18 @@ import com.example.projetoCurso.repositorio.UsuarioRepositorio;
 public class UsuarioServico {
 
 	@Autowired
-	private UsuarioRepositorio respositorio;
+	private UsuarioRepositorio repositorio;
 	
 	public List<Usuario> findAll(){
-		return respositorio.findAll();
+		return repositorio.findAll();
 	}
 	
 	public Usuario findById(Long id) {
-		Optional<Usuario> obj = respositorio.findById(id);
+		Optional<Usuario> obj = repositorio.findById(id);
 		return obj.get();
+	}
+	
+	public Usuario insert(Usuario obj) {
+		return repositorio.save(obj);
 	}
 }
