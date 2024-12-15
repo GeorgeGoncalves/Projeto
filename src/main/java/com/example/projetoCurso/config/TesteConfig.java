@@ -10,6 +10,7 @@ import org.springframework.context.annotation.Profile;
 
 import com.example.projetoCurso.entidades.Categoria;
 import com.example.projetoCurso.entidades.ItemPedido;
+import com.example.projetoCurso.entidades.Pagamento;
 import com.example.projetoCurso.entidades.Pedido;
 import com.example.projetoCurso.entidades.Produto;
 import com.example.projetoCurso.entidades.Usuario;
@@ -96,6 +97,12 @@ public class TesteConfig implements CommandLineRunner {
 		ItemPedido ip3 = new ItemPedido(p2, pro3, 2, pro3.getPreco()); 
 		ItemPedido ip4 = new ItemPedido(p3, pro5, 2, pro5.getPreco()); 
 		
-		ipp.saveAll(Arrays.asList(ip1, ip2, ip3, ip4));		
+		ipp.saveAll(Arrays.asList(ip1, ip2, ip3, ip4));	
+		
+		Pagamento pag1 = new Pagamento(null, Instant.parse("2019-06-20T22:53:07Z"),
+				p1);
+		p1.setPagamento(pag1);
+		
+		pr.save(p1);
 	}
 }

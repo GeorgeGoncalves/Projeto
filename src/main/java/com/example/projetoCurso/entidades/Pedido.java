@@ -1,5 +1,6 @@
 package com.example.projetoCurso.entidades;
 
+import java.io.Serializable;
 import java.time.Instant;
 import java.util.HashSet;
 import java.util.Objects;
@@ -8,6 +9,7 @@ import java.util.Set;
 import com.example.projetoCurso.entidades.enums.StatusPedido;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -15,9 +17,11 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
 
 @Entity
-public class Pedido {
+public class Pedido implements Serializable {
+	private static final long serialVersionUID = 1L;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -35,6 +39,9 @@ public class Pedido {
 	
 	@OneToMany(mappedBy = "id.pedido")
 	private Set<ItemPedido> item = new HashSet<>();
+	
+	@OneToOne(mappedBy = "pedido", cascade = CascadeType.ALL)
+	private Pagamento pagamento;
 	
 	public Pedido() {
 	}
@@ -85,6 +92,14 @@ public class Pedido {
 		return item;
 	}
 	
+	public Pagamento getPagamento() {
+		return pagamento;
+	}
+
+	public void setPagamento(Pagamento pagamento) {
+		this.pagamento = pagamento;
+	}
+
 	@Override
 	public int hashCode() {
 		return Objects.hash(id);
