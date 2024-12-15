@@ -3,6 +3,7 @@ package com.example.projetoCurso.entidades;
 import java.time.Instant;
 import java.util.Objects;
 
+import com.example.projetoCurso.entidades.enums.StatusPedido;
 import com.fasterxml.jackson.annotation.JsonFormat;
 
 import jakarta.persistence.Entity;
@@ -23,6 +24,8 @@ public class Pedido {
 			"yyyy-MM-dd'T'HH:mm:ss'Z'", timezone = "GMT")
 	private Instant momento;
 	
+	private Integer statusPedido;
+	
 	@ManyToOne
 	@JoinColumn(name = "usuario_ID")
 	private Usuario usuario;
@@ -30,10 +33,12 @@ public class Pedido {
 	public Pedido() {
 	}
 
-	public Pedido(Long id, Instant momento, Usuario usuario) {
+	public Pedido(Long id, Instant momento, StatusPedido statusPedido, 
+			Usuario usuario) {
 		super();
 		this.id = id;
 		this.momento = momento;
+		setStatusPedido(statusPedido);
 		this.usuario = usuario;
 	}
 
@@ -51,6 +56,15 @@ public class Pedido {
 
 	public void setMomento(Instant momento) {
 		this.momento = momento;
+	}
+
+	public StatusPedido getStatusPedido() {
+		return StatusPedido.valor(statusPedido);
+	}
+
+	public void setStatusPedido(StatusPedido statusPedido) {
+		if (statusPedido != null)
+			this.statusPedido = statusPedido.getCodigo();
 	}
 
 	public Usuario getUsuario() {
