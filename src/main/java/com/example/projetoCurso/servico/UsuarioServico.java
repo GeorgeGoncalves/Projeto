@@ -12,6 +12,8 @@ import com.example.projetoCurso.repositorio.UsuarioRepositorio;
 import com.example.projetoCurso.servico.exception.BDException;
 import com.example.projetoCurso.servico.exception.RecursoNaoEncontrado;
 
+import jakarta.persistence.EntityNotFoundException;
+
 @Service
 public class UsuarioServico {
 
@@ -40,9 +42,13 @@ public class UsuarioServico {
 	}
 	
 	public Usuario update(Long id, Usuario obj) {
+		try {
 		Usuario entidade = repositorio.getReferenceById(id);
 		updateData(entidade, obj);
 		return repositorio.save(entidade);
+		} catch (EntityNotFoundException e) {
+			throw new RecursoNaoEncontrado(id);
+		}
 	}
 
 	private void updateData(Usuario entidade, Usuario obj) {
